@@ -1,0 +1,488 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		65F6427F193B32390077387E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F6427E193B32390077387E /* Foundation.framework */; };
+		65F64281193B32390077387E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F64280193B32390077387E /* CoreGraphics.framework */; };
+		65F64283193B32390077387E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F64282193B32390077387E /* UIKit.framework */; };
+		65F64285193B32390077387E /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F64284193B32390077387E /* SpriteKit.framework */; };
+		65F6428B193B32390077387E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65F64289193B32390077387E /* InfoPlist.strings */; };
+		65F6428D193B32390077387E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F6428C193B32390077387E /* main.m */; };
+		65F64291193B32390077387E /* JGFAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F64290193B32390077387E /* JGFAppDelegate.m */; };
+		65F64294193B32390077387E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65F64292193B32390077387E /* Main.storyboard */; };
+		65F64297193B32390077387E /* JGFViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F64296193B32390077387E /* JGFViewController.m */; };
+		65F6429A193B32390077387E /* JGFMyScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F64299193B32390077387E /* JGFMyScene.m */; };
+		65F6429C193B32390077387E /* Spaceship.png in Resources */ = {isa = PBXBuildFile; fileRef = 65F6429B193B32390077387E /* Spaceship.png */; };
+		65F6429E193B32390077387E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65F6429D193B32390077387E /* Images.xcassets */; };
+		65F642A5193B32390077387E /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F642A4193B32390077387E /* XCTest.framework */; };
+		65F642A6193B32390077387E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F6427E193B32390077387E /* Foundation.framework */; };
+		65F642A7193B32390077387E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F64282193B32390077387E /* UIKit.framework */; };
+		65F642AF193B32390077387E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65F642AD193B32390077387E /* InfoPlist.strings */; };
+		65F642B1193B32390077387E /* Flying_witchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F642B0193B32390077387E /* Flying_witchTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		65F642A8193B32390077387E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65F64273193B32390077387E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 65F6427A193B32390077387E;
+			remoteInfo = "Flying witch";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		65F6427B193B32390077387E /* Flying witch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Flying witch.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		65F6427E193B32390077387E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		65F64280193B32390077387E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		65F64282193B32390077387E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		65F64284193B32390077387E /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
+		65F64288193B32390077387E /* Flying witch-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Flying witch-Info.plist"; sourceTree = "<group>"; };
+		65F6428A193B32390077387E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		65F6428C193B32390077387E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		65F6428E193B32390077387E /* Flying witch-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Flying witch-Prefix.pch"; sourceTree = "<group>"; };
+		65F6428F193B32390077387E /* JGFAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JGFAppDelegate.h; sourceTree = "<group>"; };
+		65F64290193B32390077387E /* JGFAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JGFAppDelegate.m; sourceTree = "<group>"; };
+		65F64293193B32390077387E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		65F64295193B32390077387E /* JGFViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JGFViewController.h; sourceTree = "<group>"; };
+		65F64296193B32390077387E /* JGFViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JGFViewController.m; sourceTree = "<group>"; };
+		65F64298193B32390077387E /* JGFMyScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JGFMyScene.h; sourceTree = "<group>"; };
+		65F64299193B32390077387E /* JGFMyScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JGFMyScene.m; sourceTree = "<group>"; };
+		65F6429B193B32390077387E /* Spaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Spaceship.png; sourceTree = "<group>"; };
+		65F6429D193B32390077387E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		65F642A3193B32390077387E /* Flying witchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Flying witchTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		65F642A4193B32390077387E /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		65F642AC193B32390077387E /* Flying witchTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Flying witchTests-Info.plist"; sourceTree = "<group>"; };
+		65F642AE193B32390077387E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		65F642B0193B32390077387E /* Flying_witchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Flying_witchTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		65F64278193B32390077387E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65F64281193B32390077387E /* CoreGraphics.framework in Frameworks */,
+				65F64283193B32390077387E /* UIKit.framework in Frameworks */,
+				65F64285193B32390077387E /* SpriteKit.framework in Frameworks */,
+				65F6427F193B32390077387E /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65F642A0193B32390077387E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65F642A5193B32390077387E /* XCTest.framework in Frameworks */,
+				65F642A7193B32390077387E /* UIKit.framework in Frameworks */,
+				65F642A6193B32390077387E /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		65F64272193B32390077387E = {
+			isa = PBXGroup;
+			children = (
+				65F64286193B32390077387E /* Flying witch */,
+				65F642AA193B32390077387E /* Flying witchTests */,
+				65F6427D193B32390077387E /* Frameworks */,
+				65F6427C193B32390077387E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		65F6427C193B32390077387E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				65F6427B193B32390077387E /* Flying witch.app */,
+				65F642A3193B32390077387E /* Flying witchTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		65F6427D193B32390077387E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				65F6427E193B32390077387E /* Foundation.framework */,
+				65F64280193B32390077387E /* CoreGraphics.framework */,
+				65F64282193B32390077387E /* UIKit.framework */,
+				65F64284193B32390077387E /* SpriteKit.framework */,
+				65F642A4193B32390077387E /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		65F64286193B32390077387E /* Flying witch */ = {
+			isa = PBXGroup;
+			children = (
+				65F6428F193B32390077387E /* JGFAppDelegate.h */,
+				65F64290193B32390077387E /* JGFAppDelegate.m */,
+				65F64292193B32390077387E /* Main.storyboard */,
+				65F64295193B32390077387E /* JGFViewController.h */,
+				65F64296193B32390077387E /* JGFViewController.m */,
+				65F64298193B32390077387E /* JGFMyScene.h */,
+				65F64299193B32390077387E /* JGFMyScene.m */,
+				65F6429B193B32390077387E /* Spaceship.png */,
+				65F6429D193B32390077387E /* Images.xcassets */,
+				65F64287193B32390077387E /* Supporting Files */,
+			);
+			path = "Flying witch";
+			sourceTree = "<group>";
+		};
+		65F64287193B32390077387E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				65F64288193B32390077387E /* Flying witch-Info.plist */,
+				65F64289193B32390077387E /* InfoPlist.strings */,
+				65F6428C193B32390077387E /* main.m */,
+				65F6428E193B32390077387E /* Flying witch-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		65F642AA193B32390077387E /* Flying witchTests */ = {
+			isa = PBXGroup;
+			children = (
+				65F642B0193B32390077387E /* Flying_witchTests.m */,
+				65F642AB193B32390077387E /* Supporting Files */,
+			);
+			path = "Flying witchTests";
+			sourceTree = "<group>";
+		};
+		65F642AB193B32390077387E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				65F642AC193B32390077387E /* Flying witchTests-Info.plist */,
+				65F642AD193B32390077387E /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		65F6427A193B32390077387E /* Flying witch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 65F642B4193B32390077387E /* Build configuration list for PBXNativeTarget "Flying witch" */;
+			buildPhases = (
+				65F64277193B32390077387E /* Sources */,
+				65F64278193B32390077387E /* Frameworks */,
+				65F64279193B32390077387E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Flying witch";
+			productName = "Flying witch";
+			productReference = 65F6427B193B32390077387E /* Flying witch.app */;
+			productType = "com.apple.product-type.application";
+		};
+		65F642A2193B32390077387E /* Flying witchTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 65F642B7193B32390077387E /* Build configuration list for PBXNativeTarget "Flying witchTests" */;
+			buildPhases = (
+				65F6429F193B32390077387E /* Sources */,
+				65F642A0193B32390077387E /* Frameworks */,
+				65F642A1193B32390077387E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				65F642A9193B32390077387E /* PBXTargetDependency */,
+			);
+			name = "Flying witchTests";
+			productName = "Flying witchTests";
+			productReference = 65F642A3193B32390077387E /* Flying witchTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		65F64273193B32390077387E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = JGF;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "José Gabriel Ferrer";
+				TargetAttributes = {
+					65F642A2193B32390077387E = {
+						TestTargetID = 65F6427A193B32390077387E;
+					};
+				};
+			};
+			buildConfigurationList = 65F64276193B32390077387E /* Build configuration list for PBXProject "Flying witch" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 65F64272193B32390077387E;
+			productRefGroup = 65F6427C193B32390077387E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				65F6427A193B32390077387E /* Flying witch */,
+				65F642A2193B32390077387E /* Flying witchTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		65F64279193B32390077387E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65F6428B193B32390077387E /* InfoPlist.strings in Resources */,
+				65F6429E193B32390077387E /* Images.xcassets in Resources */,
+				65F6429C193B32390077387E /* Spaceship.png in Resources */,
+				65F64294193B32390077387E /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65F642A1193B32390077387E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65F642AF193B32390077387E /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		65F64277193B32390077387E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65F64291193B32390077387E /* JGFAppDelegate.m in Sources */,
+				65F64297193B32390077387E /* JGFViewController.m in Sources */,
+				65F6429A193B32390077387E /* JGFMyScene.m in Sources */,
+				65F6428D193B32390077387E /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65F6429F193B32390077387E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65F642B1193B32390077387E /* Flying_witchTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		65F642A9193B32390077387E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 65F6427A193B32390077387E /* Flying witch */;
+			targetProxy = 65F642A8193B32390077387E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		65F64289193B32390077387E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				65F6428A193B32390077387E /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		65F64292193B32390077387E /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				65F64293193B32390077387E /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		65F642AD193B32390077387E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				65F642AE193B32390077387E /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		65F642B2193B32390077387E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		65F642B3193B32390077387E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		65F642B5193B32390077387E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Flying witch/Flying witch-Prefix.pch";
+				INFOPLIST_FILE = "Flying witch/Flying witch-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		65F642B6193B32390077387E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Flying witch/Flying witch-Prefix.pch";
+				INFOPLIST_FILE = "Flying witch/Flying witch-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		65F642B8193B32390077387E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Flying witch.app/Flying witch";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Flying witch/Flying witch-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Flying witchTests/Flying witchTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		65F642B9193B32390077387E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Flying witch.app/Flying witch";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Flying witch/Flying witch-Prefix.pch";
+				INFOPLIST_FILE = "Flying witchTests/Flying witchTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		65F64276193B32390077387E /* Build configuration list for PBXProject "Flying witch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				65F642B2193B32390077387E /* Debug */,
+				65F642B3193B32390077387E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		65F642B4193B32390077387E /* Build configuration list for PBXNativeTarget "Flying witch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				65F642B5193B32390077387E /* Debug */,
+				65F642B6193B32390077387E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		65F642B7193B32390077387E /* Build configuration list for PBXNativeTarget "Flying witchTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				65F642B8193B32390077387E /* Debug */,
+				65F642B9193B32390077387E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 65F64273193B32390077387E /* Project object */;
+}
