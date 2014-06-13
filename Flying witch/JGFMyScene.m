@@ -72,6 +72,15 @@
     //_player.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
     _player.position = CGPointMake(30, CGRectGetMidY(self.frame));
     
+    _player.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:_player.size.width /2 -5];
+    _player.physicsBody.dynamic = NO;
+    _player.physicsBody.usesPreciseCollisionDetection = YES;
+    _player.physicsBody.friction = 0;
+    _player.physicsBody.categoryBitMask = playerCategory;
+    _player.physicsBody.collisionBitMask = blockCategory;
+    _player.name = @"player";
+    
+    
     [self addChild:_player];
     [self flyingPlayer];
 }
@@ -148,6 +157,10 @@
                                    TargetNode:self
                                         Color:[UIColor whiteColor]];
     
+    [blade enablePhysicsWithCategoryBitmask:blockCategory
+                         ContactTestBitmask:playerCategory
+                           CollisionBitmask:playerCategory];
+    
     [self addChild:blade];
 }
 
@@ -189,6 +202,31 @@
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self removeBlade];
+}
+
+#pragma mark Collisions
+
+-(void)didBeginContact:(SKPhysicsContact *)contact
+{
+    NSLog(@"contact detected");
+    
+    SKPhysicsBody *firstBody;
+    SKPhysicsBody *secondBody;
+    
+    if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask)
+    {
+        firstBody = contact.bodyA;
+        secondBody = contact.bodyB;
+    }
+    else
+    {
+        firstBody = contact.bodyB;
+        secondBody = contact.bodyA;
+    }
+    
+    //Your first body is the block, secondbody is the player.
+    //Implement relevant code here.
+    
 }
 
 
