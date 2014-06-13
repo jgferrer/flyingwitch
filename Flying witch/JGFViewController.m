@@ -21,10 +21,10 @@
 {
     [super viewWillLayoutSubviews];
     
-    _adView = [[ADBannerView alloc] initWithFrame:CGRectZero];
-    _adView.delegate = self;
-    [_adView setFrame:CGRectMake(0, 0, 1024, 768)]; // set to your screen dimensions
-    [self.view addSubview:_adView];
+    //_adView = [[ADBannerView alloc] initWithFrame:CGRectZero];
+    //_adView.delegate = self;
+    //[_adView setFrame:CGRectMake(0, 0, 1024, 768)]; // set to your screen dimensions
+    //[self.view addSubview:_adView];
     
     
     // Configure the view.
@@ -64,6 +64,8 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+
+#pragma mark iAD functions
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
 {
     if (banner.isBannerLoaded) {

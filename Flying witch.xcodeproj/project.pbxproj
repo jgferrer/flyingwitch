@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		652B9F38194B664E00BEDFAA /* SKBlade.m in Sources */ = {isa = PBXBuildFile; fileRef = 652B9F36194B664E00BEDFAA /* SKBlade.m */; };
+		652B9F39194B664E00BEDFAA /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 652B9F37194B664E00BEDFAA /* spark.png */; };
 		656AFE0D1944BC0C00907041 /* witch.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 656AFE0C1944BC0C00907041 /* witch.atlas */; };
 		656F9C4B1944C2100034386B /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656F9C4A1944C2100034386B /* iAd.framework */; };
 		657CAAFD1944BDB8003B74C0 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 657CAAFB1944BDB8003B74C0 /* background.png */; };
@@ -40,6 +42,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		652B9F35194B664E00BEDFAA /* SKBlade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKBlade.h; sourceTree = "<group>"; };
+		652B9F36194B664E00BEDFAA /* SKBlade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKBlade.m; sourceTree = "<group>"; };
+		652B9F37194B664E00BEDFAA /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		656AFE0C1944BC0C00907041 /* witch.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = witch.atlas; sourceTree = "<group>"; };
 		656F9C4A1944C2100034386B /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		657CAAFB1944BDB8003B74C0 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
@@ -94,6 +99,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		652B9F34194B65ED00BEDFAA /* images */ = {
+			isa = PBXGroup;
+			children = (
+				657CAAFB1944BDB8003B74C0 /* background.png */,
+				657CAAFC1944BDB8003B74C0 /* background@2x.png */,
+			);
+			name = images;
+			sourceTree = "<group>";
+		};
 		65F64272193B32390077387E = {
 			isa = PBXGroup;
 			children = (
@@ -129,8 +143,6 @@
 		65F64286193B32390077387E /* Flying witch */ = {
 			isa = PBXGroup;
 			children = (
-				657CAAFB1944BDB8003B74C0 /* background.png */,
-				657CAAFC1944BDB8003B74C0 /* background@2x.png */,
 				656AFE0C1944BC0C00907041 /* witch.atlas */,
 				65F6428F193B32390077387E /* JGFAppDelegate.h */,
 				65F64290193B32390077387E /* JGFAppDelegate.m */,
@@ -148,6 +160,10 @@
 		65F64287193B32390077387E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				652B9F35194B664E00BEDFAA /* SKBlade.h */,
+				652B9F36194B664E00BEDFAA /* SKBlade.m */,
+				652B9F37194B664E00BEDFAA /* spark.png */,
+				652B9F34194B65ED00BEDFAA /* images */,
 				65F64288193B32390077387E /* Flying witch-Info.plist */,
 				65F64289193B32390077387E /* InfoPlist.strings */,
 				65F6428C193B32390077387E /* main.m */,
@@ -254,6 +270,7 @@
 				65F6428B193B32390077387E /* InfoPlist.strings in Resources */,
 				657CAAFD1944BDB8003B74C0 /* background.png in Resources */,
 				656AFE0D1944BC0C00907041 /* witch.atlas in Resources */,
+				652B9F39194B664E00BEDFAA /* spark.png in Resources */,
 				65F6429E193B32390077387E /* Images.xcassets in Resources */,
 				657CAAFE1944BDB8003B74C0 /* background@2x.png in Resources */,
 				65F64294193B32390077387E /* Main.storyboard in Resources */,
@@ -276,6 +293,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65F64291193B32390077387E /* JGFAppDelegate.m in Sources */,
+				652B9F38194B664E00BEDFAA /* SKBlade.m in Sources */,
 				65F64297193B32390077387E /* JGFViewController.m in Sources */,
 				65F6429A193B32390077387E /* JGFMyScene.m in Sources */,
 				65F6428D193B32390077387E /* main.m in Sources */,
