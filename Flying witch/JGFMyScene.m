@@ -72,7 +72,7 @@
     //_player.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
     _player.position = CGPointMake(30, CGRectGetMidY(self.frame));
     
-    _player.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:_player.size.width /2 -5];
+    _player.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:_player.size.width];
     _player.physicsBody.dynamic = NO;
     _player.physicsBody.usesPreciseCollisionDetection = YES;
     _player.physicsBody.friction = 0;
@@ -150,6 +150,13 @@
 
 #pragma mark - SKBlade Functions
 
+// This will help us to remove our blade and reset the _delta value
+- (void)removeBlade
+{
+    _delta = CGPointZero;
+    [blade removeFromParent];
+}
+
 // This will help us to initialize our blade
 - (void)presentBladeAtPosition:(CGPoint)position
 {
@@ -164,19 +171,13 @@
     [self addChild:blade];
 }
 
-// This will help us to remove our blade and reset the _delta value
-- (void)removeBlade
-{
-    _delta = CGPointZero;
-    [blade removeFromParent];
-}
-
 #pragma mark - Touch Events
 
 // initialize the blade at touch location
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    [self removeBlade];
     CGPoint _touchLocation = [[touches anyObject] locationInNode:self];
     [self presentBladeAtPosition:_touchLocation];
 }
