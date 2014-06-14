@@ -11,17 +11,16 @@
 
 #define TIME 1.5
 
+static const uint32_t blockCategory = 0x1 <<0;
+static const uint32_t  playerCategory = 0x1 <<1;
+
 @interface JGFMyScene() <SKPhysicsContactDelegate>
 {
     NSTimeInterval _dt;
     float bottomScrollerHeight;
 }
-@property (nonatomic) SKSpriteNode* bg1;
-@property (nonatomic) SKSpriteNode* bg2;
-
 
 @property (nonatomic) SKSpriteNode* backgroundImageNode;
-@property (nonatomic) SKSpriteNode* player;
 @property (nonatomic) NSArray* playerFlyingFrames;
 
 @property (nonatomic) float BG_VEL;
@@ -34,6 +33,10 @@
 {
     // This will help us to easily access our blade
     SKBlade *blade;
+    SKSpriteNode *bg1;
+    SKSpriteNode *bg2;
+    SKSpriteNode *player;
+    SKSpriteNode *enemy;
     
     // This will help us to update the position of the blade
     CGPoint _delta;
@@ -44,11 +47,12 @@
     if (self = [super initWithSize:size]) {
         
         _BG_VEL = (TIME*60);
-        
+        self.physicsWorld.gravity = CGVectorMake(0.0f, 0.0f);
+        self.physicsWorld.contactDelegate = self;
         /* Setup your scene here */
         [self initalizingScrollingBackground];
-        
         [self initializePlayer];
+        [self initializeEnemy];
         
     }
     return self;
@@ -67,21 +71,21 @@
     _playerFlyingFrames = flyingFrames;
     
     SKTexture *temp = _playerFlyingFrames[0];
-    _player = [SKSpriteNode spriteNodeWithTexture:temp];
+    player = [SKSpriteNode spriteNodeWithTexture:temp];
     
     //_player.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
-    _player.position = CGPointMake(30, CGRectGetMidY(self.frame));
+    player.position = CGPointMake(30, CGRectGetMidY(self.frame));
     
-    _player.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:_player.size.width];
-    _player.physicsBody.dynamic = NO;
-    _player.physicsBody.usesPreciseCollisionDetection = YES;
-    _player.physicsBody.friction = 0;
-    _player.physicsBody.categoryBitMask = playerCategory;
-    _player.physicsBody.collisionBitMask = blockCategory;
-    _player.name = @"player";
+    player.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:player.size.width/2];
+    player.physicsBody.dynamic = YES;
+    player.physicsBody.usesPreciseCollisionDetection = YES;
+    player.physicsBody.categoryBitMask = playerCategory;
+    player.physicsBody.collisionBitMask = blockCategory;
+    player.physicsBody.contactTestBitMask = 0;
+    player.name = @"player";
     
     
-    [self addChild:_player];
+    [self addChild:player];
     [self flyingPlayer];
 }
 
@@ -89,7 +93,7 @@
 -(void)flyingPlayer
 {
     //This is our general runAction method to make our bear walk.
-    [_player runAction:[SKAction repeatActionForever:
+    [player runAction:[SKAction repeatActionForever:
                       [SKAction animateWithTextures:_playerFlyingFrames
                                        timePerFrame:0.07f
                                              resize:NO
@@ -99,30 +103,52 @@
 
 -(void)initalizingScrollingBackground
 {
-    _bg1 = [SKSpriteNode spriteNodeWithImageNamed:@"background.png"];
-    _bg1.anchorPoint = CGPointZero;
-    _bg1.position = CGPointMake(0, 0);
-    [self addChild:_bg1];
+    bg1 = [SKSpriteNode spriteNodeWithImageNamed:@"background.png"];
+    bg1.anchorPoint = CGPointZero;
+    bg1.position = CGPointMake(0, 0);
+    [self addChild:bg1];
     
-    _bg2 = [SKSpriteNode spriteNodeWithImageNamed:@"background.png"];
-    _bg2.anchorPoint = CGPointZero;
-    _bg2.position = CGPointMake(_bg1.size.width-1, 0);
-    [self addChild:_bg2];
+    bg2 = [SKSpriteNode spriteNodeWithImageNamed:@"background.png"];
+    bg2.anchorPoint = CGPointZero;
+    bg2.position = CGPointMake(bg1.size.width-1, 0);
+    [self addChild:bg2];
 }
 
 - (void)moveBackground
 {
-    _bg1.position = CGPointMake(_bg1.position.x-(_BG_VEL/60), _bg1.position.y);
-    _bg2.position = CGPointMake(_bg2.position.x-(_BG_VEL/60), _bg2.position.y);
+    bg1.position = CGPointMake(bg1.position.x-(_BG_VEL/60), bg1.position.y);
+    bg2.position = CGPointMake(bg2.position.x-(_BG_VEL/60), bg2.position.y);
     
-    if (_bg1.position.x < -_bg1.size.width){
-        _bg1.position = CGPointMake(_bg2.position.x + _bg2.size.width, _bg1.position.y);
+    if (bg1.position.x < -bg1.size.width){
+        bg1.position = CGPointMake(bg2.position.x + bg2.size.width, bg1.position.y);
     }
     
-    if (_bg2.position.x < -_bg2.size.width) {
-        _bg2.position = CGPointMake(_bg1.position.x + _bg1.size.width, _bg2.position.y);
+    if (bg2.position.x < -bg2.size.width) {
+        bg2.position = CGPointMake(bg1.position.x + bg1.size.width, bg2.position.y);
     }
 }
+
+#pragma mark Enemy
+
+-(void)initializeEnemy{
+    enemy = [[SKSpriteNode alloc] initWithImageNamed:@"enemy.png"];
+    enemy.position = CGPointMake(400, CGRectGetMidY(self.frame));
+    
+    enemy.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:(CGSizeMake(enemy.size.width, enemy.size.height))];
+    enemy.physicsBody.dynamic = YES;
+    enemy.physicsBody.categoryBitMask = blockCategory;
+    enemy.physicsBody.contactTestBitMask = playerCategory;
+    enemy.physicsBody.collisionBitMask = 0;
+    enemy.physicsBody.affectedByGravity = NO;
+    
+    [self addChild:enemy];
+    
+}
+
+-(void)moveEnemy{
+    enemy.position = CGPointMake(enemy.position.x-(_BG_VEL/85), enemy.position.y);
+}
+
 
 - (void)update:(NSTimeInterval)currentTime
 {
@@ -143,19 +169,12 @@
     // it's important to reset _delta at this point,
     // we are telling our blade to only update his position when touchesMoved is called
     _delta = CGPointZero;
-    
+    [self moveEnemy];
     [self moveBackground];
     
 }
 
 #pragma mark - SKBlade Functions
-
-// This will help us to remove our blade and reset the _delta value
-- (void)removeBlade
-{
-    _delta = CGPointZero;
-    [blade removeFromParent];
-}
 
 // This will help us to initialize our blade
 - (void)presentBladeAtPosition:(CGPoint)position
@@ -167,8 +186,16 @@
     [blade enablePhysicsWithCategoryBitmask:blockCategory
                          ContactTestBitmask:playerCategory
                            CollisionBitmask:playerCategory];
+    blade.physicsBody.dynamic = YES;
     
     [self addChild:blade];
+}
+
+// This will help us to remove our blade and reset the _delta value
+- (void)removeBlade
+{
+    _delta = CGPointZero;
+    [blade removeFromParent];
 }
 
 #pragma mark - Touch Events
@@ -207,12 +234,15 @@
 
 #pragma mark Collisions
 
--(void)didBeginContact:(SKPhysicsContact *)contact
+- (void)pillar:(SKSpriteNode *)pillar didCollideWithBird:(SKSpriteNode *)bird
 {
-    NSLog(@"contact detected");
-    
-    SKPhysicsBody *firstBody;
-    SKPhysicsBody *secondBody;
+    //Remove pillar if collision is detected and continue to play
+    [pillar removeFromParent];
+}
+
+- (void)didBeginContact:(SKPhysicsContact *)contact
+{
+    SKPhysicsBody *firstBody, *secondBody;
     
     if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask)
     {
@@ -225,10 +255,13 @@
         secondBody = contact.bodyA;
     }
     
-    //Your first body is the block, secondbody is the player.
-    //Implement relevant code here.
-    
+    if ((firstBody.categoryBitMask & blockCategory) != 0 &&
+        (secondBody.categoryBitMask & playerCategory) != 0)
+    {
+        [self pillar:(SKSpriteNode *) firstBody.node didCollideWithBird:(SKSpriteNode *) secondBody.node];
+    }
 }
+
 
 
 @end

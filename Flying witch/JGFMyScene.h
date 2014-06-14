@@ -8,9 +8,6 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-static const uint32_t blockCategory = 0x1 <<0;
-static const uint32_t  playerCategory = 0x1 <<1;
-
 @interface JGFMyScene : SKScene
 
 @end

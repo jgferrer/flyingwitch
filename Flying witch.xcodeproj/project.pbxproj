@@ -13,6 +13,7 @@
 		656F9C4B1944C2100034386B /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656F9C4A1944C2100034386B /* iAd.framework */; };
 		657CAAFD1944BDB8003B74C0 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 657CAAFB1944BDB8003B74C0 /* background.png */; };
 		657CAAFE1944BDB8003B74C0 /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 657CAAFC1944BDB8003B74C0 /* background@2x.png */; };
+		658966DA194CC97B0054D3B2 /* enemy.png in Resources */ = {isa = PBXBuildFile; fileRef = 658966D9194CC97B0054D3B2 /* enemy.png */; };
 		65F6427F193B32390077387E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F6427E193B32390077387E /* Foundation.framework */; };
 		65F64281193B32390077387E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F64280193B32390077387E /* CoreGraphics.framework */; };
 		65F64283193B32390077387E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F64282193B32390077387E /* UIKit.framework */; };
@@ -49,6 +50,7 @@
 		656F9C4A1944C2100034386B /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		657CAAFB1944BDB8003B74C0 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		657CAAFC1944BDB8003B74C0 /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background@2x.png"; sourceTree = "<group>"; };
+		658966D9194CC97B0054D3B2 /* enemy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = enemy.png; sourceTree = "<group>"; };
 		65F6427B193B32390077387E /* Flying witch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Flying witch.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		65F6427E193B32390077387E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		65F64280193B32390077387E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -160,6 +162,7 @@
 		65F64287193B32390077387E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				658966D9194CC97B0054D3B2 /* enemy.png */,
 				652B9F35194B664E00BEDFAA /* SKBlade.h */,
 				652B9F36194B664E00BEDFAA /* SKBlade.m */,
 				652B9F37194B664E00BEDFAA /* spark.png */,
@@ -269,6 +272,7 @@
 			files = (
 				65F6428B193B32390077387E /* InfoPlist.strings in Resources */,
 				657CAAFD1944BDB8003B74C0 /* background.png in Resources */,
+				658966DA194CC97B0054D3B2 /* enemy.png in Resources */,
 				656AFE0D1944BC0C00907041 /* witch.atlas in Resources */,
 				652B9F39194B664E00BEDFAA /* spark.png in Resources */,
 				65F6429E193B32390077387E /* Images.xcassets in Resources */,
