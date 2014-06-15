@@ -11,8 +11,9 @@
 
 #define TIME 1.5
 
-static const uint32_t blockCategory = 0x1 <<0;
-static const uint32_t  playerCategory = 0x1 <<1;
+static const uint32_t playerCategory   = 0x1 << 0;
+static const uint32_t enemyCategory    = 0x1 << 1;
+static const uint32_t coinCategory     = 0x1 << 2;
 
 @interface JGFMyScene() <SKPhysicsContactDelegate>
 {
@@ -20,23 +21,30 @@ static const uint32_t  playerCategory = 0x1 <<1;
     float bottomScrollerHeight;
 }
 
+@property (nonatomic) SKSpriteNode *bg1;
+@property (nonatomic) SKSpriteNode *bg2;
 @property (nonatomic) SKSpriteNode* backgroundImageNode;
+
+@property (nonatomic) SKSpriteNode *player;
 @property (nonatomic) NSArray* playerFlyingFrames;
+
+@property (nonatomic) SKSpriteNode *enemy;
+@property (nonatomic) NSArray* enemyFlyingFrames;
+@property (nonatomic) SKSpriteNode *coin;
+
 
 @property (nonatomic) float BG_VEL;
 
 @property (nonatomic) NSTimeInterval lastSpawnTimeInterval;
 @property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
+
+
 @end
 
 @implementation JGFMyScene
 {
     // This will help us to easily access our blade
     SKBlade *blade;
-    SKSpriteNode *bg1;
-    SKSpriteNode *bg2;
-    SKSpriteNode *player;
-    SKSpriteNode *enemy;
     
     // This will help us to update the position of the blade
     CGPoint _delta;
@@ -53,16 +61,19 @@ static const uint32_t  playerCategory = 0x1 <<1;
         [self initalizingScrollingBackground];
         [self initializePlayer];
         [self initializeEnemy];
+        [self createCoin];
         
     }
     return self;
 }
 
+#pragma mark Player
+
 -(void)initializePlayer
 {
     NSMutableArray *flyingFrames = [NSMutableArray array];
     SKTextureAtlas *playerAnimatedAtlas = [SKTextureAtlas atlasNamed:@"witch"];
-    int numImages = playerAnimatedAtlas.textureNames.count;
+    NSUInteger numImages = playerAnimatedAtlas.textureNames.count;
     for (int i=0; i < numImages/2; i++) {
         NSString *textureName = [NSString stringWithFormat:@"%d", i];
         SKTexture *temp = [playerAnimatedAtlas textureNamed:textureName];
@@ -71,21 +82,20 @@ static const uint32_t  playerCategory = 0x1 <<1;
     _playerFlyingFrames = flyingFrames;
     
     SKTexture *temp = _playerFlyingFrames[0];
-    player = [SKSpriteNode spriteNodeWithTexture:temp];
+    _player = [SKSpriteNode spriteNodeWithTexture:temp];
     
-    //_player.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
-    player.position = CGPointMake(30, CGRectGetMidY(self.frame));
+    _player.position = CGPointMake(30, CGRectGetMidY(self.frame));
     
-    player.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:player.size.width/2];
-    player.physicsBody.dynamic = YES;
-    player.physicsBody.usesPreciseCollisionDetection = YES;
-    player.physicsBody.categoryBitMask = playerCategory;
-    player.physicsBody.collisionBitMask = blockCategory;
-    player.physicsBody.contactTestBitMask = 0;
-    player.name = @"player";
+    _player.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:_player.size.width/2];
+    _player.physicsBody.dynamic = YES;
+    _player.physicsBody.usesPreciseCollisionDetection = YES;
+    _player.physicsBody.categoryBitMask = playerCategory;
+    _player.physicsBody.collisionBitMask = enemyCategory | coinCategory;
+    _player.physicsBody.contactTestBitMask = enemyCategory | coinCategory;
+    _player.name = @"player";
     
     
-    [self addChild:player];
+    [self addChild:_player];
     [self flyingPlayer];
 }
 
@@ -93,7 +103,7 @@ static const uint32_t  playerCategory = 0x1 <<1;
 -(void)flyingPlayer
 {
     //This is our general runAction method to make our bear walk.
-    [player runAction:[SKAction repeatActionForever:
+    [_player runAction:[SKAction repeatActionForever:
                       [SKAction animateWithTextures:_playerFlyingFrames
                                        timePerFrame:0.07f
                                              resize:NO
@@ -101,54 +111,100 @@ static const uint32_t  playerCategory = 0x1 <<1;
     return;
 }
 
+#pragma mark Background
+
 -(void)initalizingScrollingBackground
 {
-    bg1 = [SKSpriteNode spriteNodeWithImageNamed:@"background.png"];
-    bg1.anchorPoint = CGPointZero;
-    bg1.position = CGPointMake(0, 0);
-    [self addChild:bg1];
+    _bg1 = [SKSpriteNode spriteNodeWithImageNamed:@"background.png"];
+    _bg1.anchorPoint = CGPointZero;
+    _bg1.position = CGPointMake(0, 0);
+    [self addChild:_bg1];
     
-    bg2 = [SKSpriteNode spriteNodeWithImageNamed:@"background.png"];
-    bg2.anchorPoint = CGPointZero;
-    bg2.position = CGPointMake(bg1.size.width-1, 0);
-    [self addChild:bg2];
+    _bg2 = [SKSpriteNode spriteNodeWithImageNamed:@"background.png"];
+    _bg2.anchorPoint = CGPointZero;
+    _bg2.position = CGPointMake(_bg1.size.width-1, 0);
+    [self addChild:_bg2];
 }
 
 - (void)moveBackground
 {
-    bg1.position = CGPointMake(bg1.position.x-(_BG_VEL/60), bg1.position.y);
-    bg2.position = CGPointMake(bg2.position.x-(_BG_VEL/60), bg2.position.y);
+    _bg1.position = CGPointMake(_bg1.position.x-(_BG_VEL/60), _bg1.position.y);
+    _bg2.position = CGPointMake(_bg2.position.x-(_BG_VEL/60), _bg2.position.y);
     
-    if (bg1.position.x < -bg1.size.width){
-        bg1.position = CGPointMake(bg2.position.x + bg2.size.width, bg1.position.y);
+    if (_bg1.position.x < -_bg1.size.width){
+        _bg1.position = CGPointMake(_bg2.position.x + _bg2.size.width, _bg1.position.y);
     }
     
-    if (bg2.position.x < -bg2.size.width) {
-        bg2.position = CGPointMake(bg1.position.x + bg1.size.width, bg2.position.y);
+    if (_bg2.position.x < -_bg2.size.width) {
+        _bg2.position = CGPointMake(_bg1.position.x + _bg1.size.width, _bg2.position.y);
     }
 }
 
 #pragma mark Enemy
 
 -(void)initializeEnemy{
-    enemy = [[SKSpriteNode alloc] initWithImageNamed:@"enemy.png"];
-    enemy.position = CGPointMake(400, CGRectGetMidY(self.frame));
+    NSMutableArray *flyingFrames = [NSMutableArray array];
+    SKTextureAtlas *enemyAnimatedAtlas = [SKTextureAtlas atlasNamed:@"enemy"];
+    NSUInteger numImages = enemyAnimatedAtlas.textureNames.count;
+    for (int i=0; i < numImages; i++) {
+        NSString *textureName = [NSString stringWithFormat:@"%d", i];
+        SKTexture *temp = [enemyAnimatedAtlas textureNamed:textureName];
+        [flyingFrames addObject:temp];
+    }
+    _enemyFlyingFrames = flyingFrames;
     
-    enemy.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:(CGSizeMake(enemy.size.width, enemy.size.height))];
-    enemy.physicsBody.dynamic = YES;
-    enemy.physicsBody.categoryBitMask = blockCategory;
-    enemy.physicsBody.contactTestBitMask = playerCategory;
-    enemy.physicsBody.collisionBitMask = 0;
-    enemy.physicsBody.affectedByGravity = NO;
+    SKTexture *temp = _enemyFlyingFrames[0];
+    _enemy = [SKSpriteNode spriteNodeWithTexture:temp];
     
-    [self addChild:enemy];
+    _enemy.position = CGPointMake(500, CGRectGetMidY(self.frame));
     
+    _enemy.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:_enemy.size.width/2];
+    _enemy.physicsBody.dynamic = YES;
+    _enemy.physicsBody.categoryBitMask = enemyCategory;
+    _enemy.physicsBody.collisionBitMask = playerCategory;
+    _enemy.physicsBody.contactTestBitMask = playerCategory;
+    _enemy.physicsBody.affectedByGravity = NO;
+    _enemy.name = @"enemy";
+    
+    [self addChild:_enemy];
+    [self flyingEnemy];
 }
 
 -(void)moveEnemy{
-    enemy.position = CGPointMake(enemy.position.x-(_BG_VEL/85), enemy.position.y);
+    _enemy.position = CGPointMake(_enemy.position.x-(_BG_VEL/45), _enemy.position.y);
 }
 
+-(void)flyingEnemy
+{
+    //This is our general runAction method to make our bear walk.
+    [_enemy runAction:[SKAction repeatActionForever:
+                       [SKAction animateWithTextures:_enemyFlyingFrames
+                                        timePerFrame:0.07f
+                                              resize:NO
+                                             restore:YES]] withKey:@"FlyingInPlaceEnemy"];
+    return;
+}
+
+
+#pragma mark Coin
+-(void)createCoin{
+    _coin = [[SKSpriteNode alloc] initWithImageNamed:@"coin.gif"];
+    _coin.position = CGPointMake(200, CGRectGetMidY(self.frame));
+    
+    _coin.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:(CGSizeMake(_coin.size.width, _coin.size.height))];
+    _coin.physicsBody.dynamic = YES;
+    _coin.physicsBody.categoryBitMask = coinCategory;
+    _coin.physicsBody.contactTestBitMask = playerCategory;
+    _coin.physicsBody.collisionBitMask = 0;
+    _coin.physicsBody.affectedByGravity = NO;
+    
+    [self addChild:_coin];
+    
+}
+
+-(void)moveCoin{
+    _coin.position = CGPointMake(_coin.position.x-(_BG_VEL/45), _coin.position.y);
+}
 
 - (void)update:(NSTimeInterval)currentTime
 {
@@ -170,6 +226,7 @@ static const uint32_t  playerCategory = 0x1 <<1;
     // we are telling our blade to only update his position when touchesMoved is called
     _delta = CGPointZero;
     [self moveEnemy];
+    [self moveCoin];
     [self moveBackground];
     
 }
@@ -183,7 +240,7 @@ static const uint32_t  playerCategory = 0x1 <<1;
                                    TargetNode:self
                                         Color:[UIColor whiteColor]];
     
-    [blade enablePhysicsWithCategoryBitmask:blockCategory
+    [blade enablePhysicsWithCategoryBitmask:enemyCategory
                          ContactTestBitmask:playerCategory
                            CollisionBitmask:playerCategory];
     blade.physicsBody.dynamic = YES;
@@ -234,10 +291,18 @@ static const uint32_t  playerCategory = 0x1 <<1;
 
 #pragma mark Collisions
 
-- (void)pillar:(SKSpriteNode *)pillar didCollideWithBird:(SKSpriteNode *)bird
+- (void)player:(SKSpriteNode *)player didCollideWithEnemy:(SKSpriteNode *)enemy
 {
     //Remove pillar if collision is detected and continue to play
-    [pillar removeFromParent];
+    [enemy removeActionForKey:@"FlyingInPlaceEnemy"];
+    [enemy removeFromParent];
+}
+
+- (void)player:(SKSpriteNode *)player didCollideWithCoin:(SKSpriteNode *)coin
+{
+    //Remove pillar if collision is detected and continue to play
+    //[enemyCol removeActionForKey:@"FlyingInPlaceEnemy"];
+    [coin removeFromParent];
 }
 
 - (void)didBeginContact:(SKPhysicsContact *)contact
@@ -255,10 +320,15 @@ static const uint32_t  playerCategory = 0x1 <<1;
         secondBody = contact.bodyA;
     }
     
-    if ((firstBody.categoryBitMask & blockCategory) != 0 &&
-        (secondBody.categoryBitMask & playerCategory) != 0)
+    if ((firstBody.categoryBitMask & playerCategory) != 0 &&
+        (secondBody.categoryBitMask & enemyCategory) != 0)
     {
-        [self pillar:(SKSpriteNode *) firstBody.node didCollideWithBird:(SKSpriteNode *) secondBody.node];
+        [self player:(SKSpriteNode *) firstBody.node didCollideWithEnemy:(SKSpriteNode *) secondBody.node];
+    }
+    if ((firstBody.categoryBitMask & playerCategory) != 0 &&
+        (secondBody.categoryBitMask & coinCategory) != 0)
+    {
+        [self player:(SKSpriteNode *) firstBody.node didCollideWithCoin:(SKSpriteNode *) secondBody.node];
     }
 }
 
