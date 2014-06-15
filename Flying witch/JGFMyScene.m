@@ -13,7 +13,7 @@
 
 static const uint32_t playerCategory   = 0x1 << 0;
 static const uint32_t enemyCategory    = 0x1 << 1;
-static const uint32_t coinCategory     = 0x1 << 2;
+static const uint32_t starCategory     = 0x1 << 2;
 
 @interface JGFMyScene() <SKPhysicsContactDelegate>
 {
@@ -30,8 +30,9 @@ static const uint32_t coinCategory     = 0x1 << 2;
 
 @property (nonatomic) SKSpriteNode *enemy;
 @property (nonatomic) NSArray* enemyFlyingFrames;
-@property (nonatomic) SKSpriteNode *coin;
 
+@property (nonatomic) SKSpriteNode *star;
+@property (nonatomic) NSArray* starAnimatedFrames;
 
 @property (nonatomic) float BG_VEL;
 
@@ -61,7 +62,7 @@ static const uint32_t coinCategory     = 0x1 << 2;
         [self initalizingScrollingBackground];
         [self initializePlayer];
         [self initializeEnemy];
-        [self createCoin];
+        [self initializeStar];
         
     }
     return self;
@@ -90,8 +91,8 @@ static const uint32_t coinCategory     = 0x1 << 2;
     _player.physicsBody.dynamic = YES;
     _player.physicsBody.usesPreciseCollisionDetection = YES;
     _player.physicsBody.categoryBitMask = playerCategory;
-    _player.physicsBody.collisionBitMask = enemyCategory | coinCategory;
-    _player.physicsBody.contactTestBitMask = enemyCategory | coinCategory;
+    _player.physicsBody.collisionBitMask = enemyCategory | starCategory;
+    _player.physicsBody.contactTestBitMask = enemyCategory | starCategory;
     _player.name = @"player";
     
     
@@ -186,24 +187,49 @@ static const uint32_t coinCategory     = 0x1 << 2;
 }
 
 
-#pragma mark Coin
--(void)createCoin{
-    _coin = [[SKSpriteNode alloc] initWithImageNamed:@"coin.gif"];
-    _coin.position = CGPointMake(200, CGRectGetMidY(self.frame));
+#pragma mark Star
+-(void)initializeStar{
+    NSMutableArray *animatedFrames = [NSMutableArray array];
+    SKTextureAtlas *starAnimatedAtlas = [SKTextureAtlas atlasNamed:@"star"];
+    NSUInteger numImages = starAnimatedAtlas.textureNames.count;
+    for (int i=0; i < numImages; i++) {
+        NSString *textureName = [NSString stringWithFormat:@"%d", i];
+        SKTexture *temp = [starAnimatedAtlas textureNamed:textureName];
+        [animatedFrames addObject:temp];
+    }
+    _starAnimatedFrames = animatedFrames;
     
-    _coin.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:(CGSizeMake(_coin.size.width, _coin.size.height))];
-    _coin.physicsBody.dynamic = YES;
-    _coin.physicsBody.categoryBitMask = coinCategory;
-    _coin.physicsBody.contactTestBitMask = playerCategory;
-    _coin.physicsBody.collisionBitMask = 0;
-    _coin.physicsBody.affectedByGravity = NO;
+    SKTexture *temp = _starAnimatedFrames[0];
+    _star = [SKSpriteNode spriteNodeWithTexture:temp];
     
-    [self addChild:_coin];
+    _star.position = CGPointMake(500, CGRectGetMidY(self.frame)+25);
+    
+    _star.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:_star.size.width/2];
+    _star.physicsBody.dynamic = YES;
+    _star.physicsBody.categoryBitMask = starCategory;
+    _star.physicsBody.collisionBitMask = playerCategory;
+    _star.physicsBody.contactTestBitMask = playerCategory;
+    _star.physicsBody.affectedByGravity = NO;
+    _star.name = @"star";
+    
+    [self addChild:_star];
+    [self animatedStar];
     
 }
 
 -(void)moveCoin{
-    _coin.position = CGPointMake(_coin.position.x-(_BG_VEL/45), _coin.position.y);
+    _star.position = CGPointMake(_star.position.x-(_BG_VEL/45), _star.position.y);
+}
+
+-(void)animatedStar
+{
+    //This is our general runAction method to make our bear walk.
+    [_star runAction:[SKAction repeatActionForever:
+                       [SKAction animateWithTextures:_starAnimatedFrames
+                                        timePerFrame:0.05f
+                                              resize:NO
+                                             restore:YES]] withKey:@"AnimatedStar"];
+    return;
 }
 
 - (void)update:(NSTimeInterval)currentTime
@@ -326,7 +352,7 @@ static const uint32_t coinCategory     = 0x1 << 2;
         [self player:(SKSpriteNode *) firstBody.node didCollideWithEnemy:(SKSpriteNode *) secondBody.node];
     }
     if ((firstBody.categoryBitMask & playerCategory) != 0 &&
-        (secondBody.categoryBitMask & coinCategory) != 0)
+        (secondBody.categoryBitMask & starCategory) != 0)
     {
         [self player:(SKSpriteNode *) firstBody.node didCollideWithCoin:(SKSpriteNode *) secondBody.node];
     }
