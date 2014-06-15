@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 José Gabriel Ferrer. All rights reserved.
 //
 
+#import <AVFoundation/AVFoundation.h>
 #import "JGFMyScene.h"
 #import "SKBlade.h"
 
@@ -24,6 +25,7 @@ static const uint32_t starCategory     = 0x1 << 2;
 @property (nonatomic) SKSpriteNode *bg1;
 @property (nonatomic) SKSpriteNode *bg2;
 @property (nonatomic) SKSpriteNode* backgroundImageNode;
+@property (nonatomic) AVAudioPlayer * backgroundMusicPlayer;
 
 @property (nonatomic) SKSpriteNode *player;
 @property (nonatomic) NSArray* playerFlyingFrames;
@@ -88,7 +90,7 @@ static const uint32_t starCategory     = 0x1 << 2;
     
     _player.position = CGPointMake(30, CGRectGetMidY(self.frame));
     
-    _player.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:_player.size.width/2];
+    _player.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:_player.size.width/2 -5];
     _player.physicsBody.dynamic = YES;
     _player.physicsBody.usesPreciseCollisionDetection = YES;
     _player.physicsBody.categoryBitMask = playerCategory;
@@ -126,6 +128,16 @@ static const uint32_t starCategory     = 0x1 << 2;
     _bg2.anchorPoint = CGPointZero;
     _bg2.position = CGPointMake(_bg1.size.width-1, 0);
     [self addChild:_bg2];
+
+    // Música!
+    NSError *error;
+    NSURL *backgroundMusicURL = [[NSBundle mainBundle] URLForResource:@"background" withExtension:@"mp3"];
+    self.backgroundMusicPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:backgroundMusicURL error:&error];
+    self.backgroundMusicPlayer.numberOfLoops = -1;
+    [self.backgroundMusicPlayer prepareToPlay];
+    self.backgroundMusicPlayer.volume = 0.25;
+    [self.backgroundMusicPlayer play];
+    
 }
 
 - (void)moveBackground
@@ -207,11 +219,11 @@ static const uint32_t starCategory     = 0x1 << 2;
     
     int x = [self getRandomNumberBetween:self.frame.size.width+50 to:self.frame.size.width+150];
     
-    int y = [self getRandomNumberBetween:self.frame.size.height-250 to:self.frame.size.height-20];
+    int y = [self getRandomNumberBetween:self.frame.size.height-225 to:self.frame.size.height-20];
     
     star.position = CGPointMake(x, y);
     
-    star.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:star.size.width/2];
+    star.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:star.size.width/2 - 3];
     star.physicsBody.dynamic = YES;
     star.physicsBody.categoryBitMask = starCategory;
     star.physicsBody.collisionBitMask = playerCategory;
@@ -345,11 +357,12 @@ static const uint32_t starCategory     = 0x1 << 2;
     [enemy removeFromParent];
 }
 
-- (void)player:(SKSpriteNode *)player didCollideWithCoin:(SKSpriteNode *)coin
+- (void)player:(SKSpriteNode *)player didCollideWithStar:(SKSpriteNode *)star
 {
     //Remove pillar if collision is detected and continue to play
     //[enemyCol removeActionForKey:@"FlyingInPlaceEnemy"];
-    [coin removeFromParent];
+    [self runAction:[SKAction playSoundFileNamed:@"starcollect.mp3" waitForCompletion:NO]];
+    [star removeFromParent];
 }
 
 - (void)didBeginContact:(SKPhysicsContact *)contact
@@ -375,7 +388,7 @@ static const uint32_t starCategory     = 0x1 << 2;
     if ((firstBody.categoryBitMask & playerCategory) != 0 &&
         (secondBody.categoryBitMask & starCategory) != 0)
     {
-        [self player:(SKSpriteNode *) firstBody.node didCollideWithCoin:(SKSpriteNode *) secondBody.node];
+        [self player:(SKSpriteNode *) firstBody.node didCollideWithStar:(SKSpriteNode *) secondBody.node];
     }
 }
 
