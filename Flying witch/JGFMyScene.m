@@ -31,8 +31,9 @@ static const uint32_t starCategory     = 0x1 << 2;
 @property (nonatomic) SKSpriteNode *enemy;
 @property (nonatomic) NSArray* enemyFlyingFrames;
 
-@property (nonatomic) SKSpriteNode *star;
+//@property (nonatomic) SKSpriteNode *star;
 @property (nonatomic) NSArray* starAnimatedFrames;
+@property (nonatomic) int numberOfStars;
 
 @property (nonatomic) float BG_VEL;
 
@@ -165,7 +166,6 @@ static const uint32_t starCategory     = 0x1 << 2;
     _enemy.physicsBody.collisionBitMask = playerCategory;
     _enemy.physicsBody.contactTestBitMask = playerCategory;
     _enemy.physicsBody.affectedByGravity = NO;
-    _enemy.name = @"enemy";
     
     [self addChild:_enemy];
     [self flyingEnemy];
@@ -189,6 +189,8 @@ static const uint32_t starCategory     = 0x1 << 2;
 
 #pragma mark Star
 -(void)initializeStar{
+    
+    SKSpriteNode *star;
     NSMutableArray *animatedFrames = [NSMutableArray array];
     SKTextureAtlas *starAnimatedAtlas = [SKTextureAtlas atlasNamed:@"star"];
     NSUInteger numImages = starAnimatedAtlas.textureNames.count;
@@ -197,36 +199,50 @@ static const uint32_t starCategory     = 0x1 << 2;
         SKTexture *temp = [starAnimatedAtlas textureNamed:textureName];
         [animatedFrames addObject:temp];
     }
+    
     _starAnimatedFrames = animatedFrames;
     
     SKTexture *temp = _starAnimatedFrames[0];
-    _star = [SKSpriteNode spriteNodeWithTexture:temp];
+    star = [SKSpriteNode spriteNodeWithTexture:temp];
     
-    _star.position = CGPointMake(500, CGRectGetMidY(self.frame)+25);
+    int x = [self getRandomNumberBetween:self.frame.size.width+50 to:self.frame.size.width+150];
     
-    _star.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:_star.size.width/2];
-    _star.physicsBody.dynamic = YES;
-    _star.physicsBody.categoryBitMask = starCategory;
-    _star.physicsBody.collisionBitMask = playerCategory;
-    _star.physicsBody.contactTestBitMask = playerCategory;
-    _star.physicsBody.affectedByGravity = NO;
-    _star.name = @"star";
+    int y = [self getRandomNumberBetween:self.frame.size.height-250 to:self.frame.size.height-20];
     
-    [self addChild:_star];
-    [self animatedStar];
+    star.position = CGPointMake(x, y);
+    
+    star.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:star.size.width/2];
+    star.physicsBody.dynamic = YES;
+    star.physicsBody.categoryBitMask = starCategory;
+    star.physicsBody.collisionBitMask = playerCategory;
+    star.physicsBody.contactTestBitMask = playerCategory;
+    star.physicsBody.affectedByGravity = NO;
+    star.name = @"star";
+    
+    [self addChild:star];
+    [self animatedStar:star];
     
 }
 
--(void)moveCoin{
-    _star.position = CGPointMake(_star.position.x-(_BG_VEL/45), _star.position.y);
+-(void)moveStars{
+    _numberOfStars = 0;
+    [self enumerateChildNodesWithName:@"star" usingBlock:^(SKNode *node, BOOL *stop) {
+        node.position = CGPointMake(node.position.x-(_BG_VEL/45), node.position.y);
+        if (node.position.x<-10) {
+            [node removeFromParent];
+        }
+        _numberOfStars = _numberOfStars +1;
+    }];
+    if (_numberOfStars < 2 && [self childNodeWithName:@"star"].position.x < 250) {
+        [self initializeStar];
+    }
 }
 
--(void)animatedStar
-{
+-(void)animatedStar:(SKSpriteNode *)star{
     //This is our general runAction method to make our bear walk.
-    [_star runAction:[SKAction repeatActionForever:
+    [star runAction:[SKAction repeatActionForever:
                        [SKAction animateWithTextures:_starAnimatedFrames
-                                        timePerFrame:0.05f
+                                        timePerFrame:0.07f
                                               resize:NO
                                              restore:YES]] withKey:@"AnimatedStar"];
     return;
@@ -252,7 +268,7 @@ static const uint32_t starCategory     = 0x1 << 2;
     // we are telling our blade to only update his position when touchesMoved is called
     _delta = CGPointZero;
     [self moveEnemy];
-    [self moveCoin];
+    [self moveStars];
     [self moveBackground];
     
 }
@@ -313,6 +329,11 @@ static const uint32_t starCategory     = 0x1 << 2;
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self removeBlade];
+}
+
+#pragma mark Utils
+-(int)getRandomNumberBetween:(int)from to:(int)to {
+    return (int)from + arc4random() % (to-from+1);
 }
 
 #pragma mark Collisions
