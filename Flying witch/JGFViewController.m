@@ -8,10 +8,9 @@
 
 #import "JGFViewController.h"
 #import "JGFMyScene.h"
-#import <iAd/iAd.h>
 
-@interface JGFViewController () <ADBannerViewDelegate>
-    @property (nonatomic, strong) ADBannerView *adView;
+@interface JGFViewController ()
+
 @end
 
 @implementation JGFViewController

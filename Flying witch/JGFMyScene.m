@@ -8,51 +8,15 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import "JGFMyScene.h"
-#import "SKBlade.h"
-
-#define TIME 1.5
-
-static const uint32_t playerCategory   = 0x1 << 0;
-static const uint32_t enemyCategory    = 0x1 << 1;
-static const uint32_t starCategory     = 0x1 << 2;
 
 @interface JGFMyScene() <SKPhysicsContactDelegate>
 {
     NSTimeInterval _dt;
-    float bottomScrollerHeight;
 }
-
-@property (nonatomic) SKSpriteNode *bg1;
-@property (nonatomic) SKSpriteNode *bg2;
-@property (nonatomic) SKSpriteNode* backgroundImageNode;
-@property (nonatomic) AVAudioPlayer * backgroundMusicPlayer;
-
-@property (nonatomic) SKSpriteNode *player;
-@property (nonatomic) NSArray* playerFlyingFrames;
-
-@property (nonatomic) SKSpriteNode *enemy;
-@property (nonatomic) NSArray* enemyFlyingFrames;
-
-//@property (nonatomic) SKSpriteNode *star;
-@property (nonatomic) NSArray* starAnimatedFrames;
-@property (nonatomic) int numberOfStars;
-
-@property (nonatomic) float BG_VEL;
-
-@property (nonatomic) NSTimeInterval lastSpawnTimeInterval;
-@property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
-
 
 @end
 
 @implementation JGFMyScene
-{
-    // This will help us to easily access our blade
-    SKBlade *blade;
-    
-    // This will help us to update the position of the blade
-    CGPoint _delta;
-}
 
 -(id)initWithSize:(CGSize)size
 {
@@ -64,6 +28,15 @@ static const uint32_t starCategory     = 0x1 << 2;
         /* Setup your scene here */
         [self initalizingScrollingBackground];
         [self initializePlayer];
+        
+        self.score = 0;
+        self.scoreLabel = [[SKLabelNode alloc] initWithFontNamed:@"Chalkduster"];
+        self.scoreLabel.fontSize = 30;
+        self.scoreLabel.color = [UIColor whiteColor];
+        self.scoreLabel.position = CGPointMake(self.frame.size.width - 50, 20);
+        [self addChild:self.scoreLabel];
+        self.scoreLabel.text = [NSString stringWithFormat:@"%3.0f",self.score];
+        
         [self initializeEnemy];
         [self initializeStar];
         
@@ -273,74 +246,33 @@ static const uint32_t starCategory     = 0x1 << 2;
     //CFTimeInterval timeSinceLast = currentTime - self.lastUpdateTimeInterval;
     self.lastUpdateTimeInterval = currentTime;
     
-    // Here we add the _delta value to our blade position
-    blade.position = CGPointMake(blade.position.x + _delta.x, blade.position.y + _delta.y);
-    
-    // it's important to reset _delta at this point,
-    // we are telling our blade to only update his position when touchesMoved is called
-    _delta = CGPointZero;
     [self moveEnemy];
     [self moveStars];
     [self moveBackground];
     
 }
 
-#pragma mark - SKBlade Functions
-
-// This will help us to initialize our blade
-- (void)presentBladeAtPosition:(CGPoint)position
-{
-    blade = [[SKBlade alloc] initWithPosition:position
-                                   TargetNode:self
-                                        Color:[UIColor whiteColor]];
-    
-    [blade enablePhysicsWithCategoryBitmask:enemyCategory
-                         ContactTestBitmask:playerCategory
-                           CollisionBitmask:playerCategory];
-    blade.physicsBody.dynamic = YES;
-    
-    [self addChild:blade];
-}
-
-// This will help us to remove our blade and reset the _delta value
-- (void)removeBlade
-{
-    _delta = CGPointZero;
-    [blade removeFromParent];
-}
-
 #pragma mark - Touch Events
-
-// initialize the blade at touch location
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [self removeBlade];
-    CGPoint _touchLocation = [[touches anyObject] locationInNode:self];
-    [self presentBladeAtPosition:_touchLocation];
+    
 }
-
-// _delta value will help us later to properly update our blade position,
-// We calculate the diference between currentPoint and previousPosition and store that value in _delta
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    CGPoint _currentPoint = [[touches anyObject] locationInNode:self];
-    CGPoint _previousPoint = [[touches anyObject] previousLocationInNode:self];
-    
-    _delta = CGPointMake(_currentPoint.x - _previousPoint.x, _currentPoint.y - _previousPoint.y);
+
 }
 
-// Remove the Blade if the touches have been cancelled or ended
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [self removeBlade];
+
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [self removeBlade];
+
 }
 
 #pragma mark Utils
@@ -348,22 +280,7 @@ static const uint32_t starCategory     = 0x1 << 2;
     return (int)from + arc4random() % (to-from+1);
 }
 
-#pragma mark Collisions
-
-- (void)player:(SKSpriteNode *)player didCollideWithEnemy:(SKSpriteNode *)enemy
-{
-    //Remove pillar if collision is detected and continue to play
-    [enemy removeActionForKey:@"FlyingInPlaceEnemy"];
-    [enemy removeFromParent];
-}
-
-- (void)player:(SKSpriteNode *)player didCollideWithStar:(SKSpriteNode *)star
-{
-    //Remove pillar if collision is detected and continue to play
-    //[enemyCol removeActionForKey:@"FlyingInPlaceEnemy"];
-    [self runAction:[SKAction playSoundFileNamed:@"starcollect.mp3" waitForCompletion:NO]];
-    [star removeFromParent];
-}
+#pragma mark Collisions Delegate
 
 - (void)didBeginContact:(SKPhysicsContact *)contact
 {
@@ -390,6 +307,19 @@ static const uint32_t starCategory     = 0x1 << 2;
     {
         [self player:(SKSpriteNode *) firstBody.node didCollideWithStar:(SKSpriteNode *) secondBody.node];
     }
+}
+
+- (void)player:(SKSpriteNode *)player didCollideWithEnemy:(SKSpriteNode *)enemy
+{
+    [enemy removeFromParent];
+}
+
+- (void)player:(SKSpriteNode *)player didCollideWithStar:(SKSpriteNode *)star
+{
+    [self runAction:[SKAction playSoundFileNamed:@"starcollect.mp3" waitForCompletion:NO]];
+    self.score = self.score + 1;
+    self.scoreLabel.text = [NSString stringWithFormat:@"%3.0f",self.score];
+    [star removeFromParent];
 }
 
 
