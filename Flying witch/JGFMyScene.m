@@ -44,10 +44,10 @@
     [self addChild:scoreStar];
     
     self.score = 0;
-    self.scoreLabel = [[SKLabelNode alloc] initWithFontNamed:@"Chalkduster"];
-    self.scoreLabel.fontSize = 25;
-    self.scoreLabel.color = [UIColor blackColor];
-    self.scoreLabel.position = CGPointMake(self.frame.size.width - 50, 20);
+    self.scoreLabel = [[SKLabelNode alloc] initWithFontNamed:@"STHeitiSC-Medium"];
+    self.scoreLabel.fontSize = 20;
+    self.scoreLabel.fontColor = [UIColor blackColor];
+    self.scoreLabel.position = CGPointMake(self.frame.size.width - 50, 22);
     [self addChild:self.scoreLabel];
     self.scoreLabel.text = [NSString stringWithFormat:@"%3.0f",self.score];
 
