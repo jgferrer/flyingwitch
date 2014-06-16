@@ -26,22 +26,31 @@
         self.physicsWorld.gravity = CGVectorMake(0.0f, 0.0f);
         self.physicsWorld.contactDelegate = self;
         /* Setup your scene here */
+        
         [self initalizingScrollingBackground];
+        [self initializeScoreCounter];
         [self initializePlayer];
-        
-        self.score = 0;
-        self.scoreLabel = [[SKLabelNode alloc] initWithFontNamed:@"Chalkduster"];
-        self.scoreLabel.fontSize = 30;
-        self.scoreLabel.color = [UIColor whiteColor];
-        self.scoreLabel.position = CGPointMake(self.frame.size.width - 50, 20);
-        [self addChild:self.scoreLabel];
-        self.scoreLabel.text = [NSString stringWithFormat:@"%3.0f",self.score];
-        
         [self initializeEnemy];
         [self initializeStar];
         
     }
     return self;
+}
+
+#pragma mark HUD
+-(void)initializeScoreCounter{
+    SKSpriteNode *scoreStar = [[SKSpriteNode alloc] initWithImageNamed:@"scoreStar.png"];
+    scoreStar.position = CGPointMake(self.frame.size.width - 50, 35);
+    [self addChild:scoreStar];
+    
+    self.score = 0;
+    self.scoreLabel = [[SKLabelNode alloc] initWithFontNamed:@"Chalkduster"];
+    self.scoreLabel.fontSize = 25;
+    self.scoreLabel.color = [UIColor blackColor];
+    self.scoreLabel.position = CGPointMake(self.frame.size.width - 50, 20);
+    [self addChild:self.scoreLabel];
+    self.scoreLabel.text = [NSString stringWithFormat:@"%3.0f",self.score];
+
 }
 
 #pragma mark Player

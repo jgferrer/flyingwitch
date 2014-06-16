@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 José Gabriel Ferrer. All rights reserved.
 //
 
+#import <AVFoundation/AVFoundation.h>
 #import <SpriteKit/SpriteKit.h>
 
 #define TIME 1.5
