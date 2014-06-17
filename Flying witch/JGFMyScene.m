@@ -8,6 +8,7 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import "JGFMyScene.h"
+#import "JGFStar.h"
 
 @interface JGFMyScene() <SKPhysicsContactDelegate>
 {
@@ -31,7 +32,7 @@
         [self initializeScoreCounter];
         [self initializePlayer];
         [self initializeEnemy];
-        [self initializeStar];
+        [self createStar];
         
     }
     return self;
@@ -182,43 +183,12 @@
 
 
 #pragma mark Star
--(void)initializeStar{
-    
-    SKSpriteNode *star;
-    NSMutableArray *animatedFrames = [NSMutableArray array];
-    SKTextureAtlas *starAnimatedAtlas = [SKTextureAtlas atlasNamed:@"star"];
-    NSUInteger numImages = starAnimatedAtlas.textureNames.count;
-    for (int i=0; i < numImages; i++) {
-        NSString *textureName = [NSString stringWithFormat:@"%d", i];
-        SKTexture *temp = [starAnimatedAtlas textureNamed:textureName];
-        [animatedFrames addObject:temp];
-    }
-    
-    _starAnimatedFrames = animatedFrames;
-    
-    SKTexture *temp = _starAnimatedFrames[0];
-    star = [SKSpriteNode spriteNodeWithTexture:temp];
-    
-    int x = [self getRandomNumberBetween:self.frame.size.width+50 to:self.frame.size.width+150];
-    
-    int y = [self getRandomNumberBetween:self.frame.size.height-225 to:self.frame.size.height-20];
-    
-    star.position = CGPointMake(x, y);
-    
-    star.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:star.size.width/2 - 3];
-    star.physicsBody.dynamic = YES;
-    star.physicsBody.categoryBitMask = starCategory;
-    star.physicsBody.collisionBitMask = playerCategory;
-    star.physicsBody.contactTestBitMask = playerCategory;
-    star.physicsBody.affectedByGravity = NO;
-    star.name = @"star";
-    
-    [self addChild:star];
-    [self animatedStar:star];
-    
+-(void)createStar{
+    JGFStar *starObj = [[JGFStar alloc] init];
+    [self addChild:starObj.star];
 }
 
--(void)moveStars{
+-(void)moveAndCreateStars{
     _numberOfStars = 0;
     [self enumerateChildNodesWithName:@"star" usingBlock:^(SKNode *node, BOOL *stop) {
         node.position = CGPointMake(node.position.x-(_BG_VEL/45), node.position.y);
@@ -228,18 +198,8 @@
         _numberOfStars = _numberOfStars +1;
     }];
     if (_numberOfStars < 2 && [self childNodeWithName:@"star"].position.x < 250) {
-        [self initializeStar];
+        [self createStar];
     }
-}
-
--(void)animatedStar:(SKSpriteNode *)star{
-    //This is our general runAction method to make our bear walk.
-    [star runAction:[SKAction repeatActionForever:
-                       [SKAction animateWithTextures:_starAnimatedFrames
-                                        timePerFrame:0.07f
-                                              resize:NO
-                                             restore:YES]] withKey:@"AnimatedStar"];
-    return;
 }
 
 - (void)update:(NSTimeInterval)currentTime
@@ -256,7 +216,7 @@
     self.lastUpdateTimeInterval = currentTime;
     
     [self moveEnemy];
-    [self moveStars];
+    [self moveAndCreateStars];
     [self moveBackground];
     
 }

@@ -6,14 +6,12 @@
 //  Copyright (c) 2014 José Gabriel Ferrer. All rights reserved.
 //
 
+#import "Common.h"
 #import <AVFoundation/AVFoundation.h>
 #import <SpriteKit/SpriteKit.h>
+#import "JGFStar.h"
 
 #define TIME 1.5
-
-static const uint32_t playerCategory   = 0x1 << 0;
-static const uint32_t enemyCategory    = 0x1 << 1;
-static const uint32_t starCategory     = 0x1 << 2;
 
 @interface JGFMyScene : SKScene <SKPhysicsContactDelegate>
 

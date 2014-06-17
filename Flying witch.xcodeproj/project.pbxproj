@@ -10,6 +10,7 @@
 		651BEE45194DE34100982AEC /* star.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 651BEE44194DE34100982AEC /* star.atlas */; };
 		651BEE47194DFDCF00982AEC /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 651BEE46194DFDCF00982AEC /* background.mp3 */; };
 		651BEE4C194E070F00982AEC /* starcollect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 651BEE4B194E070F00982AEC /* starcollect.mp3 */; };
+		654070BE1950B2D100CBD546 /* JGFStar.m in Sources */ = {isa = PBXBuildFile; fileRef = 654070BD1950B2D100CBD546 /* JGFStar.m */; };
 		656AFE0D1944BC0C00907041 /* witch.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 656AFE0C1944BC0C00907041 /* witch.atlas */; };
 		656F9C4B1944C2100034386B /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656F9C4A1944C2100034386B /* iAd.framework */; };
 		657CAAFD1944BDB8003B74C0 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 657CAAFB1944BDB8003B74C0 /* background.png */; };
@@ -48,6 +49,9 @@
 		651BEE44194DE34100982AEC /* star.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = star.atlas; sourceTree = "<group>"; };
 		651BEE46194DFDCF00982AEC /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background.mp3; sourceTree = "<group>"; };
 		651BEE4B194E070F00982AEC /* starcollect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = starcollect.mp3; sourceTree = "<group>"; };
+		654070BC1950B2D100CBD546 /* JGFStar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGFStar.h; sourceTree = "<group>"; };
+		654070BD1950B2D100CBD546 /* JGFStar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGFStar.m; sourceTree = "<group>"; };
+		654070BF1950B40D00CBD546 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		656AFE0C1944BC0C00907041 /* witch.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = witch.atlas; sourceTree = "<group>"; };
 		656F9C4A1944C2100034386B /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		657CAAFB1944BDB8003B74C0 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
@@ -161,6 +165,7 @@
 				65ABFFD3194F613800456A93 /* enemy.atlas */,
 				651BEE44194DE34100982AEC /* star.atlas */,
 				656AFE0C1944BC0C00907041 /* witch.atlas */,
+				654070BF1950B40D00CBD546 /* Common.h */,
 				65F6428F193B32390077387E /* JGFAppDelegate.h */,
 				65F64290193B32390077387E /* JGFAppDelegate.m */,
 				65F64292193B32390077387E /* Main.storyboard */,
@@ -168,6 +173,8 @@
 				65F64296193B32390077387E /* JGFViewController.m */,
 				65F64298193B32390077387E /* JGFMyScene.h */,
 				65F64299193B32390077387E /* JGFMyScene.m */,
+				654070BC1950B2D100CBD546 /* JGFStar.h */,
+				654070BD1950B2D100CBD546 /* JGFStar.m */,
 				65F6429D193B32390077387E /* Images.xcassets */,
 				65F64287193B32390077387E /* Supporting Files */,
 			);
@@ -312,6 +319,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65F64291193B32390077387E /* JGFAppDelegate.m in Sources */,
+				654070BE1950B2D100CBD546 /* JGFStar.m in Sources */,
 				65F64297193B32390077387E /* JGFViewController.m in Sources */,
 				65F6429A193B32390077387E /* JGFMyScene.m in Sources */,
 				65F6428D193B32390077387E /* main.m in Sources */,
