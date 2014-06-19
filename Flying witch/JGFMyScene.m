@@ -46,9 +46,9 @@
     
     self.score = 0;
     self.scoreLabel = [[SKLabelNode alloc] initWithFontNamed:@"STHeitiSC-Medium"];
-    self.scoreLabel.fontSize = 20;
+    self.scoreLabel.fontSize = 12;
     self.scoreLabel.fontColor = [UIColor blackColor];
-    self.scoreLabel.position = CGPointMake(self.frame.size.width - 50, 22);
+    self.scoreLabel.position = CGPointMake(self.frame.size.width - 50, 27);
     [self addChild:self.scoreLabel];
     self.scoreLabel.text = [NSString stringWithFormat:@"%3.0f",self.score];
 
