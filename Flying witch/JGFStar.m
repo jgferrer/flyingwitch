@@ -38,11 +38,12 @@
     star.position = CGPointMake(x, y);
     
     star.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:star.size.width/2 - 3];
-    star.physicsBody.dynamic = YES;
+    star.physicsBody.dynamic = NO;
     star.physicsBody.categoryBitMask = starCategory;
     star.physicsBody.collisionBitMask = playerCategory;
     star.physicsBody.contactTestBitMask = playerCategory;
     star.physicsBody.affectedByGravity = NO;
+    star.physicsBody.restitution = 0.0;
     star.name = @"star";
     
     self.star = star;

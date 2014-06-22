@@ -7,6 +7,7 @@
 //
 
 #import <AVFoundation/AVFoundation.h>
+#import "Common.h"
 #import "JGFMyScene.h"
 #import "JGFStar.h"
 
@@ -24,14 +25,37 @@
     if (self = [super initWithSize:size]) {
         
         _BG_VEL = (TIME*60);
-        self.physicsWorld.gravity = CGVectorMake(0.0f, 0.0f);
+        self.physicsWorld.gravity = CGVectorMake(0.0f, -0.5f);
         self.physicsWorld.contactDelegate = self;
         /* Setup your scene here */
+        
+        CGMutablePathRef path = CGPathCreateMutable();
+        CGPoint p = CGPointMake(self.frame.size.width, self.frame.size.height);
+        CGPathMoveToPoint(path, nil, p.x, p.y);
+        p = CGPointMake(0, self.frame.size.height);
+        CGPathAddLineToPoint(path, nil, p.x, p.y);
+        p = CGPointMake(0, 0);
+        CGPathAddLineToPoint(path, nil, p.x, p.y);
+        p = CGPointMake(self.frame.size.width, 0);
+        CGPathAddLineToPoint(path, nil, p.x, p.y);
+        // 1 Create a physics body that borders the screen
+        SKPhysicsBody* borderBackground = [SKPhysicsBody bodyWithEdgeChainFromPath:path];
+        self.physicsBody = borderBackground;
+        
+        self.physicsBody.restitution = 0.0f;
+        self.physicsBody.categoryBitMask = backgroundCategory;
+        self.physicsBody.collisionBitMask = playerCategory;
+        self.physicsBody.contactTestBitMask = playerCategory;
+        self.physicsBody.friction = 0.0f;
+        self.physicsBody.dynamic = NO;
+        
+        CGPathRelease(path);
+        
         
         [self initalizingScrollingBackground];
         [self initializeScoreCounter];
         [self initializePlayer];
-        [self initializeEnemy];
+        //[self initializeEnemy];
         [self createStar];
         
     }
@@ -71,15 +95,18 @@
     SKTexture *temp = _playerFlyingFrames[0];
     _player = [SKSpriteNode spriteNodeWithTexture:temp];
     
-    _player.position = CGPointMake(30, CGRectGetMidY(self.frame));
+    _player.position = CGPointMake(35, CGRectGetMidY(self.frame));
     
     _player.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:_player.size.width/2 -5];
     _player.physicsBody.dynamic = YES;
     _player.physicsBody.usesPreciseCollisionDetection = YES;
     _player.physicsBody.categoryBitMask = playerCategory;
-    _player.physicsBody.collisionBitMask = enemyCategory | starCategory;
-    _player.physicsBody.contactTestBitMask = enemyCategory | starCategory;
+    _player.physicsBody.collisionBitMask = enemyCategory | starCategory | backgroundCategory;
+    _player.physicsBody.contactTestBitMask = enemyCategory | starCategory | backgroundCategory;
     _player.name = @"player";
+    _player.physicsBody.affectedByGravity = YES;
+    _player.physicsBody.allowsRotation=NO;
+    _player.physicsBody.restitution = 0.0;
     
     
     [self addChild:_player];
@@ -212,7 +239,7 @@
     {
         _dt = 0;
     }
-    //CFTimeInterval timeSinceLast = currentTime - self.lastUpdateTimeInterval;
+    _timeSinceLast = currentTime - self.lastUpdateTimeInterval;
     self.lastUpdateTimeInterval = currentTime;
     
     [self moveEnemy];
@@ -225,7 +252,7 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    
+    [_player.physicsBody applyForce:CGVectorMake(0, 8000 * _timeSinceLast)];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
@@ -285,6 +312,9 @@
 
 - (void)player:(SKSpriteNode *)player didCollideWithStar:(SKSpriteNode *)star
 {
+    //_player.physicsBody.dynamic = NO;
+    //_player.position = CGPointMake(30,_player.position.y);
+    //_player.physicsBody.dynamic = YES;
     [self runAction:[SKAction playSoundFileNamed:@"starcollect.mp3" waitForCompletion:NO]];
     self.score = self.score + 1;
     self.scoreLabel.text = [NSString stringWithFormat:@"%3.0f",self.score];

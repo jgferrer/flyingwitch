@@ -34,7 +34,9 @@
 
 @property (nonatomic) float BG_VEL;
 
+@property (nonatomic) NSTimeInterval timeSinceLast;
 @property (nonatomic) NSTimeInterval lastSpawnTimeInterval;
 @property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
+
 
 @end

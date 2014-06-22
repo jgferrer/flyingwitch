@@ -11,8 +11,9 @@
 
 #define DEVICE_SIZE [[[[UIApplication sharedApplication] keyWindow] rootViewController].view convertRect:[[UIScreen mainScreen] bounds] fromView:nil].size
 
-static const uint32_t playerCategory   = 0x1 << 0;
-static const uint32_t enemyCategory    = 0x1 << 1;
-static const uint32_t starCategory     = 0x1 << 2;
+static const uint32_t playerCategory        = 0x1 << 0;
+static const uint32_t enemyCategory         = 0x1 << 1;
+static const uint32_t starCategory          = 0x1 << 2;
+static const uint32_t backgroundCategory    = 0x1 << 3;
 
 #endif
