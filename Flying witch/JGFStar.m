@@ -40,10 +40,11 @@
     star.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:star.size.width/2 - 3];
     star.physicsBody.dynamic = NO;
     star.physicsBody.categoryBitMask = starCategory;
-    star.physicsBody.collisionBitMask = playerCategory;
+    //star.physicsBody.collisionBitMask = playerCategory;
     star.physicsBody.contactTestBitMask = playerCategory;
     star.physicsBody.affectedByGravity = NO;
-    star.physicsBody.restitution = 0.0;
+    star.physicsBody.restitution = 0.0f;
+    star.physicsBody.friction = 0.0f;
     star.name = @"star";
     
     self.star = star;

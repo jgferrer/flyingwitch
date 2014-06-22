@@ -25,7 +25,7 @@
     if (self = [super initWithSize:size]) {
         
         _BG_VEL = (TIME*60);
-        self.physicsWorld.gravity = CGVectorMake(0.0f, -0.5f);
+        self.physicsWorld.gravity = CGVectorMake(0.0f, -0.7f);
         self.physicsWorld.contactDelegate = self;
         /* Setup your scene here */
         
@@ -95,13 +95,13 @@
     SKTexture *temp = _playerFlyingFrames[0];
     _player = [SKSpriteNode spriteNodeWithTexture:temp];
     
-    _player.position = CGPointMake(35, CGRectGetMidY(self.frame));
+    _player.position = CGPointMake(30, CGRectGetMidY(self.frame));
     
     _player.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:_player.size.width/2 -5];
     _player.physicsBody.dynamic = YES;
     _player.physicsBody.usesPreciseCollisionDetection = YES;
     _player.physicsBody.categoryBitMask = playerCategory;
-    _player.physicsBody.collisionBitMask = enemyCategory | starCategory | backgroundCategory;
+    _player.physicsBody.collisionBitMask = enemyCategory | backgroundCategory;
     _player.physicsBody.contactTestBitMask = enemyCategory | starCategory | backgroundCategory;
     _player.name = @"player";
     _player.physicsBody.affectedByGravity = YES;
@@ -145,7 +145,7 @@
     self.backgroundMusicPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:backgroundMusicURL error:&error];
     self.backgroundMusicPlayer.numberOfLoops = -1;
     [self.backgroundMusicPlayer prepareToPlay];
-    self.backgroundMusicPlayer.volume = 0.25;
+    self.backgroundMusicPlayer.volume = 0.45;
     [self.backgroundMusicPlayer play];
     
 }
@@ -252,7 +252,7 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [_player.physicsBody applyForce:CGVectorMake(0, 8000 * _timeSinceLast)];
+    [_player.physicsBody applyForce:CGVectorMake(0, 50000 * _timeSinceLast)];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
